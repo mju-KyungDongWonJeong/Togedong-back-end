@@ -8,15 +8,17 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.PatternMatchUtils;
 import org.springframework.web.cors.CorsUtils;
 
+@Slf4j
 public class JwtAuthorizationFilter implements Filter {
 
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
 
-    private String[] whiteListURI = new String[]{"/auth/*", "/websocket-stomp/*", "/h2-console/*"};
+    private String[] whiteListURI = new String[]{"/api/auth/*", "/websocket-stomp/*", "/h2-console/*"};
 
 
     @Override
@@ -34,6 +36,7 @@ public class JwtAuthorizationFilter implements Filter {
             return;
         }
 
+        log.info(requestURI);
         String authorization = request.getHeader(AUTHORIZATION);
 
         if (authorization == null || !authorization.startsWith(BEARER_PREFIX)) {
