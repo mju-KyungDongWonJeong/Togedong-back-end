@@ -14,11 +14,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
     private Long id;
 
     @Column(unique = true)
@@ -29,12 +28,16 @@ public class User {
 
     private String password;
 
+    public boolean hasSamePassword(String password) {
+        return password.equals(this.password);
+    }
+
     public UserResponse toDto() {
         return new UserResponse(userId, userName);
     }
 
     @Builder
-    public User(final String userId, final String password, final String userName) {
+    public Member(final String userId, final String password, final String userName) {
         this.userId = userId;
         this.password = password;
         this.userName = userName;
