@@ -1,11 +1,16 @@
 package com.togedong.auth.service;
 
+import static com.togedong.global.exception.ErrorCode.DUPLICATE_USER_ID;
+import static com.togedong.global.exception.ErrorCode.USER_NOT_FOUND;
+import static com.togedong.global.exception.ErrorCode.WRONG_PASSWORD;
+
 import com.togedong.auth.dto.SignInRequest;
 import com.togedong.auth.dto.SignUpRequest;
 import com.togedong.auth.dto.TokenResponse;
 import com.togedong.auth.dto.UserResponse;
+import com.togedong.global.exception.CustomException;
 import com.togedong.global.helper.JwtProvider;
-import com.togedong.user.entity.User;
+import com.togedong.user.entity.Member;
 import com.togedong.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,28 +29,37 @@ public class JwtAuthService implements AuthService {
     public UserResponse register(final SignUpRequest request) {
         validateDuplicateUserId(request.userId());
 
-        User user = User.builder()
+        Member member = Member.builder()
             .userId(request.userId())
             .userName(request.userName())
             .password(request.password())
             .build();
 
-        return userRepository.save(user)
+        return userRepository.save(member)
             .toDto();
     }
 
     @Override
     @Transactional
     public TokenResponse login(final SignInRequest request) {
-        User user = userRepository.findByUserId(request.userId())
-            .orElseThrow();
+        Member member = findUserByUserId(request);
 
-        return null;
+        if(!member.hasSamePassword(request.password())){
+            throw new CustomException(WRONG_PASSWORD);
+        }
+
+        String token = jwtProvider.createAccessToken(request.userId());
+        return new TokenResponse(token);
+    }
+
+    private Member findUserByUserId(final SignInRequest request) {
+        return userRepository.findByUserId(request.userId())
+            .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
     }
 
     private void validateDuplicateUserId(final String userId) {
-        if (!userRepository.existsByUserId(userId)) {
-
+        if (userRepository.existsByUserId(userId)) {
+            throw new CustomException(DUPLICATE_USER_ID);
         }
     }
 }
