@@ -1,5 +1,6 @@
 package com.togedong.user.entity;
 
+import com.togedong.auth.dto.UserResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,13 +25,17 @@ public class User {
     private String userName;
 
     @Column(unique = true)
-    private String email;
+    private String userId;
 
     private String password;
 
+    public UserResponse toDto() {
+        return new UserResponse(userId, userName);
+    }
+
     @Builder
-    public User(String email, String password, String userName) {
-        this.email = email;
+    public User(final String userId, final String password, final String userName) {
+        this.userId = userId;
         this.password = password;
         this.userName = userName;
     }
