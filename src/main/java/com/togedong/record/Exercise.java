@@ -1,4 +1,4 @@
-package com.togedong.exercise;
+package com.togedong.record;
 
 import lombok.Getter;
 

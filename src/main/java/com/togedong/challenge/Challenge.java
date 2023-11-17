@@ -2,11 +2,11 @@ package com.togedong.challenge;
 
 import static com.togedong.badge.Badge.PUSH_UP_BADGE;
 import static com.togedong.badge.Badge.SQUAT_BADGE;
-import static com.togedong.exercise.Exercise.PUSH_UP;
-import static com.togedong.exercise.Exercise.SQUAT;
+import static com.togedong.record.Exercise.PUSH_UP;
+import static com.togedong.record.Exercise.SQUAT;
 
 import com.togedong.badge.Badge;
-import com.togedong.exercise.Exercise;
+import com.togedong.record.Exercise;
 import java.util.function.Predicate;
 import lombok.Getter;
 
