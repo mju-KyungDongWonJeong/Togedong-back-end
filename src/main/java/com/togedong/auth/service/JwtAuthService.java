@@ -44,12 +44,20 @@ public class JwtAuthService implements AuthService {
     public TokenResponse login(final SignInRequest request) {
         Member member = findUserByUserId(request);
 
-        if(!member.hasSamePassword(request.password())){
+        if (!member.hasSamePassword(request.password())) {
             throw new CustomException(WRONG_PASSWORD);
         }
 
         String token = jwtProvider.createAccessToken(request.userId());
         return new TokenResponse(token);
+    }
+
+    @Override
+    public Member findMemberByJwt(final String jwt) {
+        String memberFormId = jwtProvider.getPayload(jwt);
+
+        return userRepository.findByUserId(memberFormId)
+            .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
     }
 
     private Member findUserByUserId(final SignInRequest request) {
