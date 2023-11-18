@@ -1,11 +1,15 @@
 package com.togedong.user.entity;
 
 import com.togedong.auth.dto.UserResponse;
+import com.togedong.record.Exercise;
+import com.togedong.record.entity.ExerciseRecord;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +19,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
+
+    private static final int NOT_FOUND_RECORD_COUNT = 0;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +33,12 @@ public class Member {
     private String userId;
 
     private String password;
+
+    @OneToMany(mappedBy = "member")
+    private List<ExerciseRecord> records;
+
+    @OneToMany(mappedBy = "member")
+    private List<ExerciseRecord> bestRecords;
 
     public boolean hasSamePassword(String password) {
         return password.equals(this.password);
@@ -41,5 +53,24 @@ public class Member {
         this.userId = userId;
         this.password = password;
         this.userName = userName;
+    }
+
+    public List<ExerciseRecord> findExerciseRecordsByKind(final Exercise exercise) {
+        return records.stream()
+            .filter(record -> record.isSameExercise(exercise))
+            .toList();
+    }
+
+    public int calculateRecordsSum(final Exercise exercise) {
+        return findExerciseRecordsByKind(exercise).stream()
+            .mapToInt(ExerciseRecord::getRecord)
+            .sum();
+    }
+
+    public int getMaxRecord(final Exercise exercise) {
+        return findExerciseRecordsByKind(exercise).stream()
+            .mapToInt(ExerciseRecord::getRecord)
+            .max()
+            .orElseGet(()->NOT_FOUND_RECORD_COUNT);
     }
 }
