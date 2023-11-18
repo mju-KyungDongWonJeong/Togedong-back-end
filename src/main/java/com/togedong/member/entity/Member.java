@@ -1,4 +1,4 @@
-package com.togedong.user.entity;
+package com.togedong.member.entity;
 
 import com.togedong.auth.dto.UserResponse;
 import com.togedong.badge.Badge;

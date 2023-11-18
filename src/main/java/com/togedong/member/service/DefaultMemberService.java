@@ -1,13 +1,13 @@
-package com.togedong.user.service;
+package com.togedong.member.service;
 
 import static com.togedong.global.exception.ErrorCode.USER_NOT_FOUND;
 
 import com.togedong.global.exception.CustomException;
 import com.togedong.record.Exercise;
-import com.togedong.user.controller.dto.DashBoardResponse;
-import com.togedong.user.controller.dto.SimpleRecordResponse;
-import com.togedong.user.entity.Member;
-import com.togedong.user.repository.UserRepository;
+import com.togedong.member.controller.dto.DashBoardResponse;
+import com.togedong.member.controller.dto.SimpleRecordResponse;
+import com.togedong.member.entity.Member;
+import com.togedong.member.repository.MemberRepository;
 import java.util.List;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DefaultMemberService implements MemberService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
 
     @Override
     public DashBoardResponse getUserDashBoard(final String userName, final Member member) {

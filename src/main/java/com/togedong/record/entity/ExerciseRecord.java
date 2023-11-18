@@ -1,7 +1,7 @@
 package com.togedong.record.entity;
 
 import com.togedong.record.Exercise;
-import com.togedong.user.entity.Member;
+import com.togedong.member.entity.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

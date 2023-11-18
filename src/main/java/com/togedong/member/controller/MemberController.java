@@ -1,10 +1,10 @@
-package com.togedong.user.controller;
+package com.togedong.member.controller;
 
 import com.togedong.global.annotation.TokenInfo;
 import com.togedong.global.response.ResponseHandler;
-import com.togedong.user.controller.dto.DashBoardResponse;
-import com.togedong.user.entity.Member;
-import com.togedong.user.service.MemberService;
+import com.togedong.member.controller.dto.DashBoardResponse;
+import com.togedong.member.entity.Member;
+import com.togedong.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

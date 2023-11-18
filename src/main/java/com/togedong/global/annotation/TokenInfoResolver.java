@@ -1,7 +1,7 @@
 package com.togedong.global.annotation;
 
 import com.togedong.auth.service.AuthService;
-import com.togedong.user.entity.Member;
+import com.togedong.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;

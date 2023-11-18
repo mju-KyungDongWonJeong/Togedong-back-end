@@ -1,4 +1,4 @@
-package com.togedong.user.controller.dto;
+package com.togedong.member.controller.dto;
 
 import java.util.List;
 

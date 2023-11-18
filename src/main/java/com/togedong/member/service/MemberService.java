@@ -1,7 +1,7 @@
-package com.togedong.user.service;
+package com.togedong.member.service;
 
-import com.togedong.user.controller.dto.DashBoardResponse;
-import com.togedong.user.entity.Member;
+import com.togedong.member.controller.dto.DashBoardResponse;
+import com.togedong.member.entity.Member;
 
 public interface MemberService {
 
