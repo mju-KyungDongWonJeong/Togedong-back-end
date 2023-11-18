@@ -1,6 +1,7 @@
 package com.togedong.user.entity;
 
 import com.togedong.auth.dto.UserResponse;
+import com.togedong.badge.Badge;
 import com.togedong.record.Exercise;
 import com.togedong.record.entity.ExerciseRecord;
 import jakarta.persistence.CollectionTable;
@@ -13,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -58,13 +60,6 @@ public class Member {
         return new UserResponse(userId, userName);
     }
 
-    @Builder
-    public Member(final String userId, final String password, final String userName) {
-        this.userId = userId;
-        this.password = password;
-        this.userName = userName;
-    }
-
     public List<ExerciseRecord> findExerciseRecordsByKind(final Exercise exercise) {
         return records.stream()
             .filter(record -> record.isSameExercise(exercise))
@@ -81,6 +76,24 @@ public class Member {
         return findExerciseRecordsByKind(exercise).stream()
             .mapToInt(ExerciseRecord::getRecord)
             .max()
-            .orElseGet(()->NOT_FOUND_RECORD_COUNT);
+            .orElseGet(() -> NOT_FOUND_RECORD_COUNT);
+    }
+
+    public boolean hasSameName(final String userName) {
+        return this.userName.equals(userName);
+    }
+
+    public int getBadgeCount() {
+        return badges.size();
+    }
+
+    @Builder
+    public Member(final String userId, final String password, final String userName) {
+        this.userId = userId;
+        this.password = password;
+        this.userName = userName;
+        this.badges = new ArrayList<>();
+        this.records = new ArrayList<>();
+        this.bestRecords = new ArrayList<>();
     }
 }
