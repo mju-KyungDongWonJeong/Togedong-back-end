@@ -20,7 +20,7 @@ import org.springframework.data.annotation.CreatedDate;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Record {
+public class ExerciseRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,9 +40,13 @@ public class Record {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    public Record(final Exercise exercise, final Member member, final Integer record) {
+    public ExerciseRecord(final Exercise exercise, final Member member, final Integer record) {
         this.exercise = exercise;
         this.member = member;
         this.record = record;
+    }
+
+    public boolean isSameExercise(final Exercise exercise) {
+        return this.exercise.equals(exercise);
     }
 }
