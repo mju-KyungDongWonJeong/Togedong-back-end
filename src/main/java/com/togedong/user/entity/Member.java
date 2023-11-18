@@ -3,8 +3,12 @@ package com.togedong.user.entity;
 import com.togedong.auth.dto.UserResponse;
 import com.togedong.record.Exercise;
 import com.togedong.record.entity.ExerciseRecord;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,6 +37,12 @@ public class Member {
     private String userId;
 
     private String password;
+
+    @ElementCollection(targetClass = Badge.class)
+    @CollectionTable(name = "badge")
+    @Column(name = "badge")
+    @Enumerated(EnumType.STRING)
+    private List<Badge> badges;
 
     @OneToMany(mappedBy = "member")
     private List<ExerciseRecord> records;

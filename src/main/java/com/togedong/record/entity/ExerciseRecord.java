@@ -4,6 +4,7 @@ import com.togedong.record.Exercise;
 import com.togedong.user.entity.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class ExerciseRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Exercise exercise;
 
     @ManyToOne(fetch = FetchType.LAZY)
