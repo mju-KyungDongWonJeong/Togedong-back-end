@@ -60,10 +60,41 @@ public class DefaultMemberService implements MemberService {
         log.info("Member : " + targetMember.getUserName() + " ChallengeName : " + challengeName);
         participantService.participantChallenge(targetMember, challengeName);
     }
+
+    @Override
+    public TotalChallengeResponse getMemberChallenges(final Member member, final String userName) {
+        Member targetMember = findMemberByName(userName);
+
+        List<Challenge> allChallenges = challengeService.findAllChallenges();
+        List<ChallengeResponse> challenges = allChallenges.stream()
+            .map(challenge -> includeMemberInfo(challenge, targetMember))
+            .toList();
+
+        return new TotalChallengeResponse(challenges, requestHimSelf(userName, member));
+    }
+
     @Override
     public boolean requestHimSelf(final String userName, final Member member) {
         return member.hasSameName(userName);
     }
+
+    private ChallengeResponse includeMemberInfo(final Challenge challenge, final Member member) {
+
+        int participantCount = participantService.getChallengeParticipantCount(challenge.getId());
+        String description = challenge.getDescription();
+
+        log.info("participant count : " + participantCount);
+
+        if (!participantService.alreadyParticipate(member, challenge)) {
+            return new ChallengeResponse(description, participantCount, 0,
+                NOT_PARTICIPANT);
+        }
+
+        int progressPercent = challenge.calculateProgressPercent(
+            member.calculateRecordsSum(challenge.getExercise()));
+        return new ChallengeResponse(description, participantCount, progressPercent, PARTICIPANT);
+    }
+
     private Member findMemberByName(final String name) {
         return userRepository.findByUserName(name)
             .orElseThrow(() -> new CustomException(USER_NOT_FOUND));

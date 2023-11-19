@@ -1,5 +1,6 @@
 package com.togedong.member.controller;
 
+import com.togedong.member.controller.dto.TotalChallengeResponse;
 import com.togedong.global.annotation.TokenInfo;
 import com.togedong.global.response.ResponseHandler;
 import com.togedong.member.controller.dto.DashBoardResponse;
@@ -33,5 +34,13 @@ public class MemberController {
         @PathVariable String userName, @PathVariable String challengeName) {
         memberService.participantChallenge(member, userName, challengeName);
         return ResponseHandler.generateResponseWithoutData(HttpStatus.CREATED, "챌린지 참여가 완료되었습니다!");
+    }
+
+    @GetMapping("/challenge/{userName}")
+    public ResponseEntity<Object> getChallenges(@TokenInfo Member member,
+        @PathVariable String userName) {
+        TotalChallengeResponse challenges = memberService.getMemberChallenges(member,
+            userName);
+        return ResponseHandler.generateResponseWithoutMessage(HttpStatus.OK, challenges);
     }
 }

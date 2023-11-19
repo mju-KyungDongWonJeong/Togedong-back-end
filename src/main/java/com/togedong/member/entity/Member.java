@@ -2,8 +2,12 @@ package com.togedong.member.entity;
 
 import com.togedong.auth.dto.UserResponse;
 import com.togedong.badge.Badge;
+import com.togedong.participant.entity.Participant;
+import com.togedong.global.exception.CustomException;
+import com.togedong.global.exception.ErrorCode;
 import com.togedong.record.Exercise;
 import com.togedong.record.entity.ExerciseRecord;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -20,10 +24,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Slf4j
 public class Member {
 
     private static final int NOT_FOUND_RECORD_COUNT = 0;
@@ -46,11 +52,11 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private List<Badge> badges;
 
-    @OneToMany(mappedBy = "member")
-    private List<ExerciseRecord> records;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Participant> participants = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<ExerciseRecord> bestRecords;
+    private List<ExerciseRecord> records;
 
     public boolean hasSamePassword(String password) {
         return password.equals(this.password);
@@ -87,6 +93,19 @@ public class Member {
         return badges.size();
     }
 
+    public boolean appliedChallenge(final Participant participant) {
+        return participants.contains(participant);
+    }
+
+    public void participantChallenge(final Participant participant) {
+        if (appliedChallenge(participant)) {
+            throw new CustomException(ErrorCode.DUPLICATE_CHALLENGE);
+        }
+
+        participants.add(participant);
+        log.info(participant.toString());
+    }
+
     @Builder
     public Member(final String userId, final String password, final String userName) {
         this.userId = userId;
@@ -94,6 +113,5 @@ public class Member {
         this.userName = userName;
         this.badges = new ArrayList<>();
         this.records = new ArrayList<>();
-        this.bestRecords = new ArrayList<>();
     }
 }
