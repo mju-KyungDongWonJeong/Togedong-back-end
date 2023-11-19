@@ -1,14 +1,17 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/togedong
+    url: jdbc:h2:tcp://localhost/~/togedong;mode=mysql
     username: togedong
     password: pw
     driver-class-name: org.h2.Driver
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: create
     properties:
       format_sql: true
+    defer-datasource-initialization : true
+  sql.init.mode : always
 
 server:
   servlet:
