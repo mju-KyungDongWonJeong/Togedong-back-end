@@ -6,6 +6,7 @@ import static com.togedong.participant.ParticipantStatus.PARTICIPANT;
 
 import com.togedong.member.controller.dto.ChallengeResponse;
 import com.togedong.challenge.entity.Challenge;
+import com.togedong.member.controller.dto.RecordResponse;
 import com.togedong.member.controller.dto.TotalChallengeResponse;
 import com.togedong.challenge.service.ChallengeService;
 import com.togedong.participant.service.ParticipantService;
@@ -16,6 +17,7 @@ import com.togedong.member.controller.dto.DashBoardResponse;
 import com.togedong.member.controller.dto.SimpleRecordResponse;
 import com.togedong.member.entity.Member;
 import com.togedong.member.repository.MemberRepository;
+import com.togedong.record.service.RecordService;
 import java.util.List;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ public class DefaultMemberService implements MemberService {
     private final MemberRepository userRepository;
     private final ParticipantService participantService;
     private final ChallengeService challengeService;
+    private final RecordService recordService;
 
     @Override
     public DashBoardResponse getUserDashBoard(final String userName, final Member member) {
@@ -71,6 +74,12 @@ public class DefaultMemberService implements MemberService {
             .toList();
 
         return new TotalChallengeResponse(challenges, requestHimSelf(userName, member));
+    }
+
+    @Override
+    public List<RecordResponse> getExerciseRank(final String exerciseName) {
+        Exercise exercise = Exercise.findExerciseByName(exerciseName);
+        return recordService.getRankByExercise(exercise);
     }
 
     @Override

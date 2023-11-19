@@ -1,8 +1,10 @@
 package com.togedong.member.service;
 
+import com.togedong.member.controller.dto.RecordResponse;
 import com.togedong.member.controller.dto.TotalChallengeResponse;
 import com.togedong.member.controller.dto.DashBoardResponse;
 import com.togedong.member.entity.Member;
+import java.util.List;
 
 public interface MemberService {
 
@@ -14,4 +16,6 @@ public interface MemberService {
         final String challengeName);
 
     TotalChallengeResponse getMemberChallenges(final Member member, final String userName);
+
+    List<RecordResponse> getExerciseRank(String exerciseName);
 }
