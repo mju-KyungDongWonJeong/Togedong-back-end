@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,5 +26,12 @@ public class MemberController {
         @TokenInfo Member member) {
         DashBoardResponse userDashBoard = memberService.getUserDashBoard(userName, member);
         return ResponseHandler.generateResponseWithoutMessage(HttpStatus.ACCEPTED, userDashBoard);
+    }
+
+    @PostMapping("/challenge/{userName}/{challengeName}")
+    public ResponseEntity<Object> applyChallenge(@TokenInfo Member member,
+        @PathVariable String userName, @PathVariable String challengeName) {
+        memberService.participantChallenge(member, userName, challengeName);
+        return ResponseHandler.generateResponseWithoutData(HttpStatus.CREATED, "챌린지 참여가 완료되었습니다!");
     }
 }
