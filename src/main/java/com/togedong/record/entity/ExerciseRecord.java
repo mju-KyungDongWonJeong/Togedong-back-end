@@ -1,5 +1,6 @@
 package com.togedong.record.entity;
 
+import com.togedong.member.controller.dto.RecordResponse;
 import com.togedong.record.Exercise;
 import com.togedong.member.entity.Member;
 import jakarta.persistence.Column;
@@ -37,7 +38,6 @@ public class ExerciseRecord {
     @Column
     private Integer record;
 
-
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -49,5 +49,9 @@ public class ExerciseRecord {
 
     public boolean isSameExercise(final Exercise exercise) {
         return this.exercise.equals(exercise);
+    }
+
+    public RecordResponse toDto() {
+        return new RecordResponse(member.getUserName(), record);
     }
 }
