@@ -4,10 +4,10 @@ import static com.togedong.global.exception.ErrorCode.DUPLICATE_USER_ID;
 import static com.togedong.global.exception.ErrorCode.USER_NOT_FOUND;
 import static com.togedong.global.exception.ErrorCode.WRONG_PASSWORD;
 
-import com.togedong.auth.dto.SignInRequest;
-import com.togedong.auth.dto.SignUpRequest;
-import com.togedong.auth.dto.TokenResponse;
-import com.togedong.auth.dto.UserResponse;
+import com.togedong.auth.controller.dto.SignInRequest;
+import com.togedong.auth.controller.dto.SignUpRequest;
+import com.togedong.auth.controller.dto.TokenResponse;
+import com.togedong.auth.controller.dto.UserResponse;
 import com.togedong.global.exception.CustomException;
 import com.togedong.global.helper.JwtProvider;
 import com.togedong.member.entity.Member;

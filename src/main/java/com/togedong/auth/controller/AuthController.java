@@ -1,9 +1,9 @@
 package com.togedong.auth.controller;
 
-import com.togedong.auth.dto.SignInRequest;
-import com.togedong.auth.dto.SignUpRequest;
-import com.togedong.auth.dto.TokenResponse;
-import com.togedong.auth.dto.UserResponse;
+import com.togedong.auth.controller.dto.SignInRequest;
+import com.togedong.auth.controller.dto.SignUpRequest;
+import com.togedong.auth.controller.dto.TokenResponse;
+import com.togedong.auth.controller.dto.UserResponse;
 import com.togedong.auth.service.AuthService;
 import com.togedong.global.response.ResponseHandler;
 import jakarta.validation.Valid;
