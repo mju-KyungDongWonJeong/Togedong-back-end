@@ -13,6 +13,4 @@ public interface AuthService {
     TokenResponse login(final SignInRequest request);
 
     Member findMemberByJwt(final String jwt);
-
-    Member findMemberByName(final String name);
 }
