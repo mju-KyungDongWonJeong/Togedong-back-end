@@ -10,4 +10,6 @@ public interface ParticipantService {
     boolean alreadyParticipate(final Member member, final Challenge challenge);
 
     int getChallengeParticipantCount(final String challengeName);
+
+    void checkParticipantArchive(final Member member);
 }

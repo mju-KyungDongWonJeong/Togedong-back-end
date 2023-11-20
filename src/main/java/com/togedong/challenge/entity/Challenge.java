@@ -1,6 +1,7 @@
 package com.togedong.challenge.entity;
 
 import com.togedong.badge.Badge;
+import com.togedong.member.entity.Member;
 import com.togedong.record.Exercise;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,5 +39,9 @@ public class Challenge {
 
     public int calculateProgressPercent(final int sum) {
         return sum / COUNT_CHALLENGE_CONDITION * 100;
+    }
+
+    public void giveArchiveBadge(final Member member) {
+        member.addBadge(badge);
     }
 }

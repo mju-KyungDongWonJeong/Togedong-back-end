@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class DefaultParticipantService implements ParticipantService {
 
+    private static final int ARCHIVE_CHALLENGE_PERCENT = 100;
+
     private final ParticipantRepository participantRepository;
     private final ChallengeService challengeService;
 
@@ -41,5 +43,16 @@ public class DefaultParticipantService implements ParticipantService {
     @Override
     public int getChallengeParticipantCount(final String challengeName) {
         return participantRepository.countByChallenge_Id(challengeName);
+    }
+
+    @Override
+    @Transactional
+    public void checkParticipantArchive(final Member member) {
+        member.getParticipants()
+            .stream()
+            .map(Participant::getChallenge)
+            .filter(challenge -> challenge.calculateProgressPercent(
+                member.calculateRecordsSum(challenge.getExercise())) >= ARCHIVE_CHALLENGE_PERCENT)
+            .forEach(challenge -> challenge.giveArchiveBadge(member));
     }
 }

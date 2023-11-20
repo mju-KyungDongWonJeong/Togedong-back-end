@@ -1,6 +1,6 @@
 package com.togedong.member.entity;
 
-import com.togedong.auth.dto.UserResponse;
+import com.togedong.auth.controller.dto.UserResponse;
 import com.togedong.badge.Badge;
 import com.togedong.participant.entity.Participant;
 import com.togedong.global.exception.CustomException;
@@ -55,7 +55,7 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Participant> participants = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<ExerciseRecord> records;
 
     public boolean hasSamePassword(String password) {
@@ -103,7 +103,14 @@ public class Member {
         }
 
         participants.add(participant);
-        log.info(participant.toString());
+    }
+
+    public void addRecord(final ExerciseRecord exerciseRecord) {
+        records.add(exerciseRecord);
+    }
+
+    public void addBadge(final Badge badge) {
+        badges.add(badge);
     }
 
     @Builder
@@ -113,5 +120,18 @@ public class Member {
         this.userName = userName;
         this.badges = new ArrayList<>();
         this.records = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+            "id=" + id +
+            ", userName='" + userName + '\'' +
+            ", userId='" + userId + '\'' +
+            ", password='" + password + '\'' +
+            ", badges=" + badges +
+            ", participants=" + participants +
+            ", records=" + records +
+            '}';
     }
 }
