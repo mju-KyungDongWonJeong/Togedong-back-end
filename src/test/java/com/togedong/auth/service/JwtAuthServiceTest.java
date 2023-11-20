@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
-import com.togedong.auth.dto.SignInRequest;
+import com.togedong.auth.controller.dto.SignInRequest;
 import com.togedong.global.exception.CustomException;
 import com.togedong.global.helper.JwtProvider;
-import com.togedong.user.entity.Member;
-import com.togedong.user.repository.UserRepository;
+import com.togedong.member.entity.Member;
+import com.togedong.member.repository.MemberRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +27,7 @@ class JwtAuthServiceTest {
     private JwtAuthService authService;
 
     @Mock
-    private UserRepository userRepository;
+    private MemberRepository userRepository;
     @Mock
     private JwtProvider jwtProvider;
 

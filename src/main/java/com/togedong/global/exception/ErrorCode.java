@@ -26,6 +26,8 @@ public enum ErrorCode {
     USER_NOT_FOUND(404, "NOT_FOUND", "해당 유저 정보를 찾을 수 없습니다."),
     RESOURCE_NOT_FOUND(404, "NOT_FOUND", "해당 정보를 찾을 수 없습니다."),
     ROOM_NOT_FOUND(404, "NOT_FOUND", "해당 방을 찾을 수 없습니다."),
+    EXERCISE_NOT_FOUND(404, "NOT_FOUND", "해당 운동을 찾을 수 없습니다."),
+    CHALLENGE_NOT_FOUND(404, "NOT_FOUND", "해당 챌린지를 찾을 수 없습니다."),
 
     /* 405 METHOD_NOT_ALLOWED : 지원하지 않는 HTTP Method */
     METHOD_NOT_ALLOWED(405, "METHOD_NOT_ALLOWED", "허용되지 않은 요청입니다."),
@@ -33,6 +35,7 @@ public enum ErrorCode {
     /* 409 CONFLICT : 데이터 중복 */
     DUPLICATE_RESOURCE(409, "CONFLICT", "데이터가 이미 존재합니다"),
     DUPLICATE_USER_ID(409, "CONFLICT", "이미 존재하는 아이디입니다."),
+    DUPLICATE_CHALLENGE(409, "CONFLICT", "이미 신청한 챌린지입니다."),
 
     /* 500 INTERNAL_SERVER_ERROR */
     SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", "예기치 못한 오류가 발생하였습니다."),

@@ -4,14 +4,14 @@ import static com.togedong.global.exception.ErrorCode.DUPLICATE_USER_ID;
 import static com.togedong.global.exception.ErrorCode.USER_NOT_FOUND;
 import static com.togedong.global.exception.ErrorCode.WRONG_PASSWORD;
 
-import com.togedong.auth.dto.SignInRequest;
-import com.togedong.auth.dto.SignUpRequest;
-import com.togedong.auth.dto.TokenResponse;
-import com.togedong.auth.dto.UserResponse;
+import com.togedong.auth.controller.dto.SignInRequest;
+import com.togedong.auth.controller.dto.SignUpRequest;
+import com.togedong.auth.controller.dto.TokenResponse;
+import com.togedong.auth.controller.dto.UserResponse;
 import com.togedong.global.exception.CustomException;
 import com.togedong.global.helper.JwtProvider;
-import com.togedong.user.entity.Member;
-import com.togedong.user.repository.UserRepository;
+import com.togedong.member.entity.Member;
+import com.togedong.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class JwtAuthService implements AuthService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
     private final JwtProvider jwtProvider;
 
     @Override

@@ -1,4 +1,4 @@
-package com.togedong.auth.dto;
+package com.togedong.auth.controller.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

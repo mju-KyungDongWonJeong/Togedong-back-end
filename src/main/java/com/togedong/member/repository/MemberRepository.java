@@ -1,14 +1,16 @@
-package com.togedong.user.repository;
+package com.togedong.member.repository;
 
-import com.togedong.user.entity.Member;
+import com.togedong.member.entity.Member;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long> {
 
     boolean existsByUserId(final String userId);
 
     Optional<Member> findByUserId(final String userId);
+
+    Optional<Member> findByUserName(final String userName);
 }
