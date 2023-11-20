@@ -39,7 +39,6 @@ public class DefaultMemberService implements MemberService {
     @Override
     public DashBoardResponse getUserDashBoard(final String userName, final Member member) {
         Member targetMember = findMemberByName(userName);
-
         List<SimpleRecordResponse> maxRecords = Stream.of(Exercise.values())
             .map(exercise -> new SimpleRecordResponse(exercise.getName(),
                 member.getMaxRecord(exercise)))
@@ -55,7 +54,6 @@ public class DefaultMemberService implements MemberService {
     public void participantChallenge(final Member member, final String userName,
         final String challengeName) {
         Member targetMember = findMemberByName(userName);
-
         if (!requestHimSelf(userName, member)) {
             throw new CustomException(ErrorCode.UNAUTHORIZED_USER);
         }
@@ -82,8 +80,7 @@ public class DefaultMemberService implements MemberService {
         return recordService.getRankByExercise(exercise);
     }
 
-    @Override
-    public boolean requestHimSelf(final String userName, final Member member) {
+    private boolean requestHimSelf(final String userName, final Member member) {
         return member.hasSameName(userName);
     }
 
