@@ -54,5 +54,6 @@ jobs:
 
       - name: compose up spring application
         run: |
+          sudo docker builder prune -a
           sudo docker compose --env-file ~/.env -f ~/docker-compose.yml up -d --build
           sudo docker system prune -f
