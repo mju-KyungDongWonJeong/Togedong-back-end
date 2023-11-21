@@ -18,9 +18,7 @@ services:
       - db
     restart: always
     container_name: homedong-application
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    image: ${DOCKER_USERNAME}/${IMAGE_NAME}
     ports:
       - '8080:8080'
     environment:
