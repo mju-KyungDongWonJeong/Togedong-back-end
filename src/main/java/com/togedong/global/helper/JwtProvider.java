@@ -11,11 +11,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtProvider {
 
-    @Value("${jwt.secret}")
-    private String secretKey;
+    private String secretKey = "eyJhbGciOiJIUzI1NiJ9eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY5ODUxMjMwMSwiaWF0IjoxNjk4NTEyMzAxfQkMdVrwZRf8VyrDh0RH56LUQWZWM7eRKrzWm6MBqzvrk";
 
-    @Value("${jwt.expired}")
-    private long expiredMillisecond;
+    private long expiredMillisecond = 604800000;
 
     public String createAccessToken(final String userFormId) {
         Claims claims = Jwts.claims()
