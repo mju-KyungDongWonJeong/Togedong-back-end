@@ -14,3 +14,5 @@ spring:
       ddl-auto: create
     properties:
       format_sql: true
+    defer-datasource-initialization: true
+  sql.init.mode: always
