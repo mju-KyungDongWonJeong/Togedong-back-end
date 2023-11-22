@@ -54,5 +54,6 @@ jobs:
 
       - name: compose up spring application
         run: |
-          sudo docker compose --env-file ~/.env -f ~/docker-compose.yml up -d --build
+          sudo su
+          sudo docker compose --env-file /opt/openvidu/.env -f /opt/openvidu/docker-compose.yml up -d --build
           sudo docker system prune -f
