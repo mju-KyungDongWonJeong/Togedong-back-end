@@ -10,7 +10,6 @@ import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
 import jakarta.annotation.PostConstruct;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/room")
 public class RoomController {
 
-    @Value("${OPENVIDU_URL}")
-    private String OPENVIDU_URL;
+    private String OPENVIDU_URL = "http://43.201.69.84:8080";
 
-    @Value("${OPENVIDU_SECRET}")
-    private String OPENVIDU_SECRET;
+    private String OPENVIDU_SECRET = "homedong";
 
     private OpenVidu openvidu;
 
