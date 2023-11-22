@@ -18,7 +18,8 @@ public class JwtAuthorizationFilter implements Filter {
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
 
-    private String[] whiteListURI = new String[]{"/api/auth/*", "/websocket-stomp/*", "/h2-console/*"};
+    private String[] whiteListURI = new String[]{"/api/auth/*", "/websocket-stomp/*",
+        "/h2-console/*", "/openvidu/*"};
 
 
     @Override
