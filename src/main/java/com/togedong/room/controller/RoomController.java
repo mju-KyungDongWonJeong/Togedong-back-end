@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/room")
 public class RoomController {
 
-    private String OPENVIDU_URL = "http://43.201.69.84:8080";
+    private String OPENVIDU_URL = "43.202.202.99";
 
     private String OPENVIDU_SECRET = "homedong";
 
