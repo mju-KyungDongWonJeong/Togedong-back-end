@@ -10,8 +10,8 @@ spring:
       ddl-auto: create
     properties:
       format_sql: true
-    defer-datasource-initialization : true
-  sql.init.mode : always
+    defer-datasource-initialization: true
+  sql.init.mode: always
 
 server:
   servlet:
@@ -21,3 +21,7 @@ server:
 jwt:
   secret: eyJhbGciOiJIUzI1NiJ9eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY5ODUxMjMwMSwiaWF0IjoxNjk4NTEyMzAxfQkMdVrwZRf8VyrDh0RH56LUQWZWM7eRKrzWm6MBqzvrk
   expired: 604800000
+
+OPENVIDU_URL: { DOMAIN_OR_PUBLIC_IP0 }
+OPENVIDU_SECRET: { OPENVIDU_SECRET }
+
