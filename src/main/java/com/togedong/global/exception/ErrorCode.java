@@ -40,7 +40,8 @@ public enum ErrorCode {
 
     /* 500 INTERNAL_SERVER_ERROR */
     SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", "예기치 못한 오류가 발생하였습니다."),
-    IMAGE_UPLOAD_FAIL(500, "IMAGE_UPLOAD_FAIL", "이미지 업로드에 실패했습니다.");
+    IMAGE_UPLOAD_FAIL(500, "IMAGE_UPLOAD_FAIL", "이미지 업로드에 실패했습니다."),
+    OPENVIDU_ERROR(500, "OPENVIDU_ERROR", "예기치 못한 오류가 발생하였습니다.");
 
     private final int status;
     private final String code;
