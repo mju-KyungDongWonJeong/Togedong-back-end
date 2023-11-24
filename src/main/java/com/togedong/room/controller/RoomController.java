@@ -1,5 +1,7 @@
 package com.togedong.room.controller;
 
+import com.togedong.global.exception.CustomException;
+import com.togedong.global.exception.ErrorCode;
 import com.togedong.global.response.ResponseHandler;
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;
@@ -10,6 +12,7 @@ import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
 import jakarta.annotation.PostConstruct;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/room")
+@Slf4j
 public class RoomController {
 
     private String OPENVIDU_URL = "https://43.202.202.99/";
@@ -50,10 +54,12 @@ public class RoomController {
         throws OpenViduJavaClientException, OpenViduHttpException {
         Session session = openvidu.getActiveSession(sessionId);
         if (session == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            log.error("session " + sessionId + " not found");
+            throw new CustomException(ErrorCode.SESSION_NOT_FOUND);
         }
         ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
         Connection connection = session.createConnection(properties);
+        log.info("token " + connection.getToken() + " created");
         return ResponseHandler.generateResponseWithoutMessage(HttpStatus.OK, connection.getToken());
     }
 }

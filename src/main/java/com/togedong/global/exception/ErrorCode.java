@@ -28,6 +28,7 @@ public enum ErrorCode {
     ROOM_NOT_FOUND(404, "NOT_FOUND", "해당 방을 찾을 수 없습니다."),
     EXERCISE_NOT_FOUND(404, "NOT_FOUND", "해당 운동을 찾을 수 없습니다."),
     CHALLENGE_NOT_FOUND(404, "NOT_FOUND", "해당 챌린지를 찾을 수 없습니다."),
+    SESSION_NOT_FOUND(404, "NOT_FOUND", "해당 세션을 찾을 수 없습니다."),
 
     /* 405 METHOD_NOT_ALLOWED : 지원하지 않는 HTTP Method */
     METHOD_NOT_ALLOWED(405, "METHOD_NOT_ALLOWED", "허용되지 않은 요청입니다."),
