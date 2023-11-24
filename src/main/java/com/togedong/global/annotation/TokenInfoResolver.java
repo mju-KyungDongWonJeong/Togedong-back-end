@@ -16,7 +16,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class TokenInfoResolver implements HandlerMethodArgumentResolver {
 
     private static final int BEARER_TOKEN_PREFIX_LENGTH = 7;
-    private static final String AUTHORIZATION_REQUEST_HEADER = "Authorization";
 
     private final AuthService authService;
 
