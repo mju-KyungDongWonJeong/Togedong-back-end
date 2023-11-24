@@ -1,20 +1,20 @@
 package com.togedong.room.controller;
 
-import com.togedong.global.exception.CustomException;
-import com.togedong.global.exception.ErrorCode;
+import com.togedong.global.annotation.TokenInfo;
 import com.togedong.global.response.ResponseHandler;
-import io.openvidu.java.client.Connection;
-import io.openvidu.java.client.ConnectionProperties;
-import io.openvidu.java.client.OpenVidu;
-import io.openvidu.java.client.OpenViduHttpException;
-import io.openvidu.java.client.OpenViduJavaClientException;
-import io.openvidu.java.client.Session;
-import io.openvidu.java.client.SessionProperties;
-import jakarta.annotation.PostConstruct;
-import java.util.Map;
+import com.togedong.member.entity.Member;
+import com.togedong.room.controller.dto.JoinRoomRequest;
+import com.togedong.room.controller.dto.JoinRoomResponse;
+import com.togedong.room.controller.dto.RoomCreateRequest;
+import com.togedong.room.controller.dto.RoomCreateResponse;
+import com.togedong.room.controller.dto.RoomsResponse;
+import com.togedong.room.service.RoomService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,42 +24,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/room")
 @Slf4j
+@RequiredArgsConstructor
 public class RoomController {
 
-    private String OPENVIDU_URL = "https://43.202.202.99/";
+    private final RoomService roomService;
 
-    private String OPENVIDU_SECRET = "homedong";
-
-    private OpenVidu openvidu;
-
-
-    @PostConstruct
-    public void init() {
-        this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
+    @PostMapping
+    public ResponseEntity<Object> initializeSession(@TokenInfo final Member member,
+        @Valid @RequestBody final RoomCreateRequest request) {
+        RoomCreateResponse response = roomService.createRoom(request, member);
+        return ResponseHandler.generateResponse("방이 생성되었습니다.", HttpStatus.CREATED, response);
     }
 
-    @PostMapping("/sessions")
-    public ResponseEntity<Object> initializeSession(
-        @RequestBody(required = false) Map<String, Object> params)
-        throws OpenViduJavaClientException, OpenViduHttpException {
-        SessionProperties properties = SessionProperties.fromJson(params).build();
-        Session session = openvidu.createSession(properties);
-        return ResponseHandler.generateResponseWithoutMessage(HttpStatus.OK,
-            session.getSessionId());
+    @PostMapping("/{roomId}")
+    public ResponseEntity<Object> joinRoom(@PathVariable("roomId") final String sessionId,
+        @RequestBody(required = false) final JoinRoomRequest request) {
+        JoinRoomResponse response = roomService.joinRoom(sessionId, request);
+        return ResponseHandler.generateResponseWithoutMessage(HttpStatus.ACCEPTED, response);
     }
 
-    @PostMapping("/sessions/{sessionId}/connections")
-    public ResponseEntity<Object> createConnection(@PathVariable("sessionId") String sessionId,
-        @RequestBody(required = false) Map<String, Object> params)
-        throws OpenViduJavaClientException, OpenViduHttpException {
-        Session session = openvidu.getActiveSession(sessionId);
-        if (session == null) {
-            log.error("session " + sessionId + " not found");
-            throw new CustomException(ErrorCode.SESSION_NOT_FOUND);
-        }
-        ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
-        Connection connection = session.createConnection(properties);
-        log.info("token " + connection.getToken() + " created");
-        return ResponseHandler.generateResponseWithoutMessage(HttpStatus.OK, connection.getToken());
+    @GetMapping("/{exerciseName}")
+    public ResponseEntity<Object> getRooms(
+        @PathVariable("exerciseName") final String exerciseName) {
+        RoomsResponse response = roomService.getRooms(exerciseName);
+        return ResponseHandler.generateResponseWithoutMessage(HttpStatus.OK, response);
     }
+
 }
