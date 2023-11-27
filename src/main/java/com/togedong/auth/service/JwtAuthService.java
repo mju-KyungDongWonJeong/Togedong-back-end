@@ -6,7 +6,7 @@ import static com.togedong.global.exception.ErrorCode.WRONG_PASSWORD;
 
 import com.togedong.auth.controller.dto.SignInRequest;
 import com.togedong.auth.controller.dto.SignUpRequest;
-import com.togedong.auth.controller.dto.TokenResponse;
+import com.togedong.auth.controller.dto.SignInResponse;
 import com.togedong.auth.controller.dto.UserResponse;
 import com.togedong.global.exception.CustomException;
 import com.togedong.global.helper.JwtProvider;
@@ -41,7 +41,7 @@ public class JwtAuthService implements AuthService {
 
     @Override
     @Transactional
-    public TokenResponse login(final SignInRequest request) {
+    public SignInResponse login(final SignInRequest request) {
         Member member = findUserByUserId(request);
 
         if (!member.hasSamePassword(request.password())) {
@@ -49,7 +49,7 @@ public class JwtAuthService implements AuthService {
         }
 
         String token = jwtProvider.createAccessToken(request.userId());
-        return new TokenResponse(token);
+        return new SignInResponse(token, member.getUserName());
     }
 
     @Override

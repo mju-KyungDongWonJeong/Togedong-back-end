@@ -2,7 +2,7 @@ package com.togedong.auth.controller;
 
 import com.togedong.auth.controller.dto.SignInRequest;
 import com.togedong.auth.controller.dto.SignUpRequest;
-import com.togedong.auth.controller.dto.TokenResponse;
+import com.togedong.auth.controller.dto.SignInResponse;
 import com.togedong.auth.controller.dto.UserResponse;
 import com.togedong.auth.service.AuthService;
 import com.togedong.global.response.ResponseHandler;
@@ -31,7 +31,7 @@ public class AuthController {
 
     @PostMapping("/sign-in")
     public ResponseEntity<Object> login(@RequestBody @Valid final SignInRequest request) {
-        TokenResponse response = authService.login(request);
+        SignInResponse response = authService.login(request);
         return ResponseHandler
             .generateResponse("로그인에 성공했습니다.", HttpStatus.OK, response);
     }
