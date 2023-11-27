@@ -4,6 +4,8 @@ import static com.togedong.global.exception.ErrorCode.USER_NOT_FOUND;
 import static com.togedong.participant.ParticipantStatus.NOT_PARTICIPANT;
 import static com.togedong.participant.ParticipantStatus.PARTICIPANT;
 
+import com.togedong.badge.Badge;
+import com.togedong.member.controller.dto.BadgeResponse;
 import com.togedong.member.controller.dto.ChallengeResponse;
 import com.togedong.challenge.entity.Challenge;
 import com.togedong.member.controller.dto.RecordResponse;
@@ -44,7 +46,10 @@ public class DefaultMemberService implements MemberService {
                 member.getMaxRecord(exercise)))
             .toList();
 
-        return new DashBoardResponse(userName, targetMember.getBadgeCount(), maxRecords,
+        int badgeCount = targetMember.getBadgeCount();
+
+        return new DashBoardResponse(userName, new BadgeResponse(badgeCount,
+            Badge.calculatePercent(badgeCount)), maxRecords,
             requestHimSelf(userName, member)
         );
     }
