@@ -55,7 +55,8 @@ public class Room {
     }
 
     public RoomResponse toCommonDto() {
-        return new RoomResponse(title, managerName, memberLimit, exercise.getName(), hasPassword);
+        return new RoomResponse(id, title, managerName, memberLimit, exercise.getName(),
+            hasPassword);
     }
 
     public boolean canJoin(final String password) {
