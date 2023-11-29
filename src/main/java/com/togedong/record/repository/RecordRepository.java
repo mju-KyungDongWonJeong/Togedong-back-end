@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RecordRepository extends JpaRepository<ExerciseRecord, Long> {
 
-    List<ExerciseRecord> findDistinctByExercise(final Exercise exercise);
+    List<ExerciseRecord> findByExercise(final Exercise exercise);
 }

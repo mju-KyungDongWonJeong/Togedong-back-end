@@ -25,8 +25,8 @@ public class DefaultRecordService implements RecordService {
 
     @Override
     public List<RecordResponse> getRankByExercise(final Exercise exercise) {
-        List<ExerciseRecord> ranks = recordRepository.findDistinctByExercise(exercise);
-        ranks.sort(Comparator.comparing(ExerciseRecord::getRecord));
+        List<ExerciseRecord> ranks = recordRepository.findByExercise(exercise);
+        ranks.sort(Comparator.comparing(record -> -record.getRecord()));
 
         return ranks.stream()
             .map(ExerciseRecord::toDto)
