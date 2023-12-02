@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoomRepository extends JpaRepository<Room,String> {
 
-    List<Room> findByExercise(final Exercise exercise);
+    List<Room> findByManagerNameLikeAndExercise(final String managerName, final Exercise exercise);
 }
