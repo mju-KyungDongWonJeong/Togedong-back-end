@@ -43,7 +43,7 @@ public class Room {
 
     public static Room of(final RoomCreateRequest request, final String sessionId,
         final String managerName, final Exercise exercise) {
-        return new Room(sessionId, managerName, request.title(),
+        return new Room(sessionId, request.title(), managerName,
             request.memberLimit(), exercise,
             request.password(),
             request.hasPassword());
@@ -51,7 +51,7 @@ public class Room {
 
     public RoomCreateResponse toCreateDto(final String connectionToken) {
         return new RoomCreateResponse(id, title, managerName, memberLimit, connectionToken,
-            exercise.getName());
+            exercise.name());
     }
 
     public RoomResponse toCommonDto() {
