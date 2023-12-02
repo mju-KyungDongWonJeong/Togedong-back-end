@@ -55,7 +55,7 @@ public class Room {
     }
 
     public RoomResponse toCommonDto() {
-        return new RoomResponse(id, title, managerName, memberLimit, exercise.getName(),
+        return new RoomResponse(id, title, managerName, memberLimit, exercise.name(),
             hasPassword);
     }
 
