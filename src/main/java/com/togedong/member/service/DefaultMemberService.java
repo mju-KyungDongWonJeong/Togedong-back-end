@@ -33,6 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class DefaultMemberService implements MemberService {
 
+    private static final int NOT_PARTICIPANT_COUNT = 0;
+
     private final MemberRepository userRepository;
     private final ParticipantService participantService;
     private final ChallengeService challengeService;
@@ -97,13 +99,15 @@ public class DefaultMemberService implements MemberService {
         log.info("participant count : " + participantCount);
 
         if (!participantService.alreadyParticipate(member, challenge)) {
-            return new ChallengeResponse(description, participantCount, 0,
+            return new ChallengeResponse(challenge.getId(), description, participantCount,
+                NOT_PARTICIPANT_COUNT,
                 NOT_PARTICIPANT);
         }
 
         int progressPercent = challenge.calculateProgressPercent(
             member.calculateRecordsSum(challenge.getExercise()));
-        return new ChallengeResponse(description, participantCount, progressPercent, PARTICIPANT);
+        return new ChallengeResponse(challenge.getId(), description, participantCount,
+            progressPercent, PARTICIPANT);
     }
 
     private Member findMemberByName(final String name) {
