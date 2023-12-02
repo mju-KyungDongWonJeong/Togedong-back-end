@@ -54,9 +54,9 @@ public class RoomService {
             .orElseThrow(() -> new CustomException(ErrorCode.ROOM_NOT_FOUND));
     }
 
-    public RoomsResponse getRooms(final String exerciseName) {
-        List<RoomResponse> rooms = roomRepository.findByExercise(
-                Exercise.findExerciseByName(exerciseName))
+    public RoomsResponse getRooms(final String exerciseName, final String managerName) {
+        List<RoomResponse> rooms = roomRepository.findByManagerNameLikeAndExercise(
+                managerName, Exercise.findExerciseByName(exerciseName))
             .stream()
             .map(Room::toCommonDto)
             .toList();
