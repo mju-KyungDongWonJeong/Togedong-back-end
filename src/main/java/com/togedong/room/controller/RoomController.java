@@ -46,8 +46,9 @@ public class RoomController {
 
     @GetMapping("/{exerciseName}")
     public ResponseEntity<Object> getRooms(
-        @PathVariable("exerciseName") final String exerciseName, @RequestParam(required = false) final String managerName) {
-        RoomsResponse response = roomService.getRooms(exerciseName, managerName);
+        @PathVariable("exerciseName") final String exerciseName,
+        @RequestParam(required = false) final String search) {
+        RoomsResponse response = roomService.getRooms(exerciseName, search);
         return ResponseHandler.generateResponseWithoutMessage(HttpStatus.OK, response);
     }
 
