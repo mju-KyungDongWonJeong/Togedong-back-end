@@ -55,6 +55,7 @@ public class RoomService {
     }
 
     public RoomsResponse getRooms(final String exerciseName, final String search) {
+        log.info("search : " + search + " exerciseName : " + exerciseName);
         List<RoomResponse> rooms = roomRepository.searchByManagerNameOrTitleLikeByExercise(
                 search, Exercise.findExerciseByName(exerciseName))
             .stream()
