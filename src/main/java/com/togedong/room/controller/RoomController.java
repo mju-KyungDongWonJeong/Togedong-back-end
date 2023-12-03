@@ -10,6 +10,7 @@ import com.togedong.room.controller.dto.RoomCreateResponse;
 import com.togedong.room.controller.dto.RoomsResponse;
 import com.togedong.room.service.RoomService;
 import jakarta.validation.Valid;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 public class RoomController {
+
+    private static final String NO_SEARCH_VALUE = "";
 
     private final RoomService roomService;
 
@@ -47,8 +50,8 @@ public class RoomController {
     @GetMapping("/{exerciseName}")
     public ResponseEntity<Object> getRooms(
         @PathVariable("exerciseName") final String exerciseName,
-        @RequestParam(required = false) final String search) {
-        RoomsResponse response = roomService.getRooms(exerciseName, search);
+        @RequestParam final Optional<String> search) {
+        RoomsResponse response = roomService.getRooms(exerciseName, search.orElse(NO_SEARCH_VALUE));
         return ResponseHandler.generateResponseWithoutMessage(HttpStatus.OK, response);
     }
 
