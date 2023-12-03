@@ -55,7 +55,7 @@ public class RoomService {
     }
 
     public RoomsResponse getRooms(final String exerciseName, final String search) {
-        List<RoomResponse> rooms = roomRepository.findByManagerNameLikeAndExercise(
+        List<RoomResponse> rooms = roomRepository.searchByManagerNameOrTitleLikeByExercise(
                 search, Exercise.findExerciseByName(exerciseName))
             .stream()
             .map(Room::toCommonDto)
