@@ -51,7 +51,7 @@ public class DefaultMemberService implements MemberService {
         int badgeCount = targetMember.getBadgeCount();
 
         return new DashBoardResponse(userName, new BadgeResponse(badgeCount,
-            Badge.calculatePercent(badgeCount)), maxRecords,
+            Badge.calculatePercent(badgeCount), member.getBadgeNames()), maxRecords,
             requestHimSelf(userName, member)
         );
     }

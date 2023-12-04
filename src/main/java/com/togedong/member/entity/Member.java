@@ -113,6 +113,12 @@ public class Member {
         badges.add(badge);
     }
 
+    public List<String> getBadgeNames() {
+        return badges.stream()
+            .map(Badge::name)
+            .toList();
+    }
+
     @Builder
     public Member(final String userId, final String password, final String userName) {
         this.userId = userId;

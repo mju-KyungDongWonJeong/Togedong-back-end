@@ -1,5 +1,7 @@
 package com.togedong.member.controller.dto;
 
-public record BadgeResponse(int badgeCount, int badgePercent) {
+import java.util.List;
+
+public record BadgeResponse(int badgeCount, int badgePercent, List<String> badges) {
 
 }
