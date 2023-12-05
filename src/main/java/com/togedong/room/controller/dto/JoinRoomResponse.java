@@ -1,5 +1,7 @@
 package com.togedong.room.controller.dto;
 
-public record JoinRoomResponse(String connectionToken) {
+import java.util.UUID;
+
+public record JoinRoomResponse(UUID connectionToken) {
 
 }

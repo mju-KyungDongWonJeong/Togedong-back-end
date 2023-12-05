@@ -8,20 +8,22 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.UUID;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@AllArgsConstructor
 public class Room {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column
     private String title;
@@ -41,16 +43,26 @@ public class Room {
     @Column
     private boolean hasPassword;
 
-    public static Room of(final RoomCreateRequest request, final String sessionId,
+    private Room(final String title, final String managerName, final int memberLimit,
+        final Exercise exercise, final String password, final boolean hasPassword) {
+        this.title = title;
+        this.managerName = managerName;
+        this.memberLimit = memberLimit;
+        this.exercise = exercise;
+        this.password = password;
+        this.hasPassword = hasPassword;
+    }
+
+    public static Room of(final RoomCreateRequest request,
         final String managerName, final Exercise exercise) {
-        return new Room(sessionId, request.title(), managerName,
+        return new Room(request.title(), managerName,
             request.memberLimit(), exercise,
             request.password(),
             request.hasPassword());
     }
 
-    public RoomCreateResponse toCreateDto(final String connectionToken) {
-        return new RoomCreateResponse(id, title, managerName, memberLimit, connectionToken,
+    public RoomCreateResponse toCreateDto() {
+        return new RoomCreateResponse(title, managerName, memberLimit,
             exercise.name());
     }
 

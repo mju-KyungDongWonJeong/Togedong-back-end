@@ -12,8 +12,8 @@ import com.togedong.room.controller.dto.RoomResponse;
 import com.togedong.room.controller.dto.RoomsResponse;
 import com.togedong.room.entity.Room;
 import com.togedong.room.repository.RoomRepository;
-import com.togedong.room.service.domain.OpenViduManager;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,28 +25,28 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class RoomService {
 
-    private final OpenViduManager openViduManager;
+    //private final OpenViduManager openViduManager;
     private final RoomRepository roomRepository;
 
     @Transactional
     public RoomCreateResponse createRoom(final RoomCreateRequest request, final Member member) {
-        String sessionId = openViduManager.initializeSession();
+        //String sessionId = openViduManager.initializeSession();
         Exercise exercise = Exercise.findExerciseByName(request.exerciseName());
-        Room room = Room.of(request, sessionId, member.getUserName(), exercise);
+        Room room = Room.of(request, member.getUserName(), exercise);
         roomRepository.save(room);
 
-        String connectionToken = openViduManager.createConnection(sessionId);
-        return room.toCreateDto(connectionToken);
+        //String connectionToken = openViduManager.createConnection(sessionId);
+        return room.toCreateDto();
     }
 
-    public JoinRoomResponse joinRoom(final String sessionId, final JoinRoomRequest request) {
-        Room room = findById(sessionId);
+    public JoinRoomResponse joinRoom(final String roomId, final JoinRoomRequest request) {
+        Room room = findById(roomId);
         if (!room.canJoin(request.roomPassword())) {
             throw new CustomException(ErrorCode.WRONG_PASSWORD);
         }
 
-        String connectionToken = openViduManager.createConnection(sessionId);
-        return new JoinRoomResponse(connectionToken);
+        //String connectionToken = openViduManager.createConnection(sessionId);
+        return new JoinRoomResponse(UUID.randomUUID());
     }
 
     public Room findById(final String id) {
