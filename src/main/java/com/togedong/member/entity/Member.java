@@ -19,7 +19,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -113,10 +116,12 @@ public class Member {
         badges.add(badge);
     }
 
-    public List<String> getBadgeNames() {
-        return badges.stream()
-            .map(Badge::name)
-            .toList();
+    public Map<Badge, Boolean> getBadgeStatus() {
+        Map<Badge, Boolean> badgeStatus = new EnumMap<>(Badge.class);
+        Stream.of(Badge.values())
+            .forEach(badge -> badgeStatus.put(badge, Boolean.FALSE));
+        badges.forEach(badge -> badgeStatus.put(badge, Boolean.TRUE));
+        return badgeStatus;
     }
 
     @Builder
