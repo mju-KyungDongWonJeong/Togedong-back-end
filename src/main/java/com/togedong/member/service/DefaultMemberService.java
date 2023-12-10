@@ -45,13 +45,13 @@ public class DefaultMemberService implements MemberService {
         Member targetMember = findMemberByName(userName);
         List<SimpleRecordResponse> maxRecords = Stream.of(Exercise.values())
             .map(exercise -> new SimpleRecordResponse(exercise.getName(),
-                member.getMaxRecord(exercise)))
+                targetMember.getMaxRecord(exercise)))
             .toList();
 
         int badgeCount = targetMember.getBadgeCount();
 
         return new DashBoardResponse(userName, new BadgeResponse(badgeCount,
-            Badge.calculatePercent(badgeCount), member.getBadgeStatus()), maxRecords,
+            Badge.calculatePercent(badgeCount), targetMember.getBadgeStatus()), maxRecords,
             requestHimSelf(userName, member)
         );
     }
