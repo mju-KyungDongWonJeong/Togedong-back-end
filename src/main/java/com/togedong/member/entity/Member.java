@@ -70,15 +70,18 @@ public class Member {
     }
 
     public List<ExerciseRecord> findExerciseRecordsByKind(final Exercise exercise) {
+        log.info(userName + "의 기록 개수 : " + records.size());
         return records.stream()
             .filter(record -> record.isSameExercise(exercise))
             .toList();
     }
 
     public int calculateRecordsSum(final Exercise exercise) {
-        return findExerciseRecordsByKind(exercise).stream()
+        int sum = findExerciseRecordsByKind(exercise).stream()
             .mapToInt(ExerciseRecord::getRecord)
             .sum();
+        log.info(userName + "의 기록 총 개수 : " + sum);
+        return sum;
     }
 
     public int getMaxRecord(final Exercise exercise) {

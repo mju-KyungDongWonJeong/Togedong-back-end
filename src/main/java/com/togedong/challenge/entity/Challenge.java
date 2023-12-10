@@ -11,13 +11,15 @@ import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Slf4j
 public class Challenge {
 
-    private static final int COUNT_CHALLENGE_CONDITION = 1000;
+    private static final int COUNT_CHALLENGE_CONDITION = 600;
 
     @Id
     private String id;
@@ -38,7 +40,9 @@ public class Challenge {
     }
 
     public int calculateProgressPercent(final int sum) {
-        return sum / COUNT_CHALLENGE_CONDITION * 100;
+        int progress = sum * 100 / COUNT_CHALLENGE_CONDITION;
+        log.info(exercise + "챌린지 " + progress + "% 달성");
+        return progress;
     }
 
     public void giveArchiveBadge(final Member member) {
